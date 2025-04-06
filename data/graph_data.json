@@ -1,0 +1,23 @@
+{
+    "nodes": [
+        {"id": 1, "name": "Wu-Tang Clan", "kind": "group"},
+        {"id": 2, "name": "RZA", "kind": "singer"},
+        {"id": 3, "name": "GZA", "kind": "singer"},
+        {"id": 4, "name": "Method Man", "kind": "singer"},
+        {"id": 5, "name": "A Tribe Called Quest", "kind": "group"},
+        {"id": 6, "name": "Q-Tip", "kind": "singer"},
+        {"id": 7, "name": "Phife Dawg", "kind": "singer"},
+        {"id": 8, "name": "De La Soul", "kind": "group"},
+        {"id": 9, "name": "Posdnuos", "kind": "singer"},
+        {"id": 10, "name": "Trugoy", "kind": "singer"}
+    ],
+    "links": [
+        {"source": 2, "target": 1, "label": "is member of"},
+        {"source": 3, "target": 1, "label": "is member of"},
+        {"source": 4, "target": 1, "label": "is member of"},
+        {"source": 6, "target": 5, "label": "is member of"},
+        {"source": 7, "target": 5, "label": "is member of"},
+        {"source": 9, "target": 8, "label": "is member of"},
+        {"source": 10, "target": 8, "label": "is member of"}
+    ]
+}
