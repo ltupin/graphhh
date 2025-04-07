@@ -7,7 +7,7 @@ document.addEventListener("DOMContentLoaded", () => {
         .attr("width", width)
         .attr("height", height);
 
-    // Create a tooltip
+    // Create a tooltip for singer names
     const tooltip = d3.select("body")
         .append("div")
         .attr("class", "tooltip")
@@ -33,18 +33,8 @@ document.addEventListener("DOMContentLoaded", () => {
             .data(data.links)
             .enter()
             .append("line")
-            .attr("stroke-width", d => Math.sqrt(d.value))
+            .attr("stroke-width", 2)
             .attr("stroke", "#999");
-
-        // Add link labels
-        const linkLabels = svg.append("g")
-            .selectAll("text")
-            .data(data.links)
-            .enter()
-            .append("text")
-            .attr("font-size", "12px")
-            .attr("fill", "#555")
-            .text(d => d.label);
 
         // Add nodes
         const node = svg.append("g")
@@ -53,11 +43,11 @@ document.addEventListener("DOMContentLoaded", () => {
             .enter()
             .append("circle")
             .attr("r", 10)
-            .attr("fill", d => color(d.group))
+            .attr("fill", d => color(d.kind === "group" ? 1 : 2)) // Different colors for groups and singers
             .on("mouseover", (event, d) => {
-                if (d.group !== 1 && d.group !== 2 && d.group !== 3) { // Show tooltip only for members
+                if (d.kind === "singer") { // Show tooltip only for singers
                     tooltip.style("visibility", "visible")
-                        .text(d.name);
+                        .text(d.name); // Display the singer's name
                 }
             })
             .on("mousemove", (event) => {
@@ -72,14 +62,14 @@ document.addEventListener("DOMContentLoaded", () => {
         // Add persistent labels for group nodes only
         const groupLabels = svg.append("g")
             .selectAll("text")
-            .data(data.nodes.filter(d => d.group === 1 || d.group === 2 || d.group === 3)) // Filter for groups
+            .data(data.nodes.filter(d => d.kind === "group")) // Filter for group nodes
             .enter()
             .append("text")
-            .attr("font-size", "12px")
-            .attr("fill", "#000")
+            .attr("font-size", "14px") // Adjust font size for better visibility
+            .attr("fill", "#000") // Ensure the color contrasts with the background
             .attr("dx", 12) // Offset the label slightly to the right of the node
             .attr("dy", 4)  // Center the label vertically with the node
-            .text(d => d.name);
+            .text(d => d.name); // Use the 'name' field for the label
 
         simulation.on("tick", () => {
             link
@@ -87,10 +77,6 @@ document.addEventListener("DOMContentLoaded", () => {
                 .attr("y1", d => d.source.y)
                 .attr("x2", d => d.target.x)
                 .attr("y2", d => d.target.y);
-
-            linkLabels
-                .attr("x", d => (d.source.x + d.target.x) / 2)
-                .attr("y", d => (d.source.y + d.target.y) / 2);
 
             node
                 .attr("cx", d => d.x)
