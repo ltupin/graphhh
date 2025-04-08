@@ -62,7 +62,7 @@ document.addEventListener("DOMContentLoaded", () => {
         // Add persistent labels for group nodes only
         const groupLabels = svg.append("g")
             .selectAll("text")
-            .data(data.nodes.filter(d => d.kind === "group")) // Filter for group nodes
+            .data(data.nodes) // Filter for group nodes
             .enter()
             .append("text")
             .attr("font-size", "14px") // Adjust font size for better visibility
